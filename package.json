@@ -1,0 +1,24 @@
+{
+  "name": "bc-multi-select",
+  "author": "Simon Godden",
+  "version": "0.1",
+  "description": "Rich multi-select combo component providing type-ahead filtering using dgrid for large data sets",
+  "licenses": [
+     {
+         "type": "BSD",
+     }
+  ],
+  "repository": {
+    "type":"git",
+    "url":"http://github.com/blackcat-solutions/dgrid-multiselect-combo.git"
+  },
+  "dependencies": {
+    "dgrid": "*"
+  },
+  "directories": {
+    "lib": "."
+  },
+  "main": "./MultiSelectCombo",
+  "icon": "http://packages.dojofoundation.org/images/dgrid.png",
+  "dojoBuild": "package.js"
+}
