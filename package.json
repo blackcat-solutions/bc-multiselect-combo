@@ -5,7 +5,7 @@
   "description": "Rich multi-select combo component providing type-ahead filtering using dgrid for large data sets",
   "licenses": [
      {
-         "type": "BSD",
+         "type": "BSD"
      }
   ],
   "repository": {
@@ -13,7 +13,8 @@
     "url":"http://github.com/blackcat-solutions/dgrid-multiselect-combo.git"
   },
   "dependencies": {
-    "dgrid": "*"
+    "dgrid": "*",
+    "dijit": "*"
   },
   "directories": {
     "lib": "."

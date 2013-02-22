@@ -1,1 +1,37 @@
-<!-- placeholder -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Multi-Select combo button</title>
+    <style>
+        @import "../../dojo/resources/dojo.css";
+        @import "../../dijit/themes/dijit.css";
+        @import "../../dijit/themes/claro/claro.css";
+        @import "../../dgrid/css/skins/claro.css";
+    </style>
+    <script>
+        var start = new Date().getTime();
+    </script>
+    <script src="../../dojo/dojo.js"
+            data-dojo-config="async: true"></script>
+    <script>
+        require([
+            "dojo/dom",
+            "dgrid-multiselect-combo/MultiSelectComboBox",
+
+            "dojo/domReady!"
+        ],
+                function (dom, MultiSelectComboBox) {
+                    var e = dom.byId('placeholder');
+                    e.appendChild(new MultiSelectComboBox({}).domNode);
+                });
+    </script>
+</head>
+<body class="claro">
+
+<div id="placeholder">
+
+</div>
+
+</body>
+</html>
