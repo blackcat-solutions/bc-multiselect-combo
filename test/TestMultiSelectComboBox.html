@@ -20,12 +20,29 @@
         require([
             "dojo/dom",
             "dgrid-multiselect-combo/MultiSelectComboBox",
+            "dojo/store/Memory",
 
             "dojo/domReady!"
         ],
-                function (dom, MultiSelectComboBox) {
+                function (dom, MultiSelectComboBox, Memory) {
                     var e = dom.byId('placeholder');
-                    e.appendChild(new MultiSelectComboBox().domNode);
+                    e.appendChild(new MultiSelectComboBox({
+                        displayAttr: 'foo',
+                        store: new Memory({
+                            data: [
+                                {foo: 'aaa1'},
+                                {foo: 'aaa2'},
+                                {foo: 'aaa3'},
+                                {foo: 'aaa4'},
+                                {foo: 'aaa5'},
+                                {foo: 'bbb1'},
+                                {foo: 'bbb2'},
+                                {foo: 'bbb3'},
+                                {foo: 'bbb4'},
+                                {foo: 'bbb5'}
+                            ]
+                        })
+                    }).domNode);
                 });
     </script>
 </head>

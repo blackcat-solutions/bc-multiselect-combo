@@ -5,33 +5,41 @@ define([
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./resources/MultiSelectDropDown.html",
-    "dojo/store/Memory",
 
     "dijit/form/TextBox"
-], function (declare, OnDemandGrid, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template, Memory) {
+], function (declare, OnDemandGrid, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template) {
 
     var MyGrid = declare([OnDemandGrid], {
-        columns: {
-            "foo": {label: "Foo"}
-        }
+        showHeader: false
     });
 
     return declare("dgrid-multiselect-combo.MultiSelectDropDown", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin], {
-        templateString: template,
 
+        store: null,
+
+        templateString: template,
+        dapFilterField: null,
         dapGrid: null,
+        displayAttr: null,
+
+        _grid: null,
 
         postCreate: function() {
+            var cols = {};
+            cols[this.displayAttr] = {};
             var grid = new MyGrid({
-                store: new Memory({
-                    data: [
-                        {foo: 'bar'}
-                    ]
-                })
+                columns: cols,
+                store: this.store
             });
             this.dapGrid.appendChild(grid.domNode);
-            grid.startup();
-            grid.resize();
+            grid.refresh();
+            this._grid = grid;
+        },
+
+        _handleFilterChange: function() {
+            var query = {};
+            query[this.displayAttr] = new RegExp('^.*' + this.dapFilterField.get('displayedValue') + '.*$');
+            this._grid.set('query', query);
         }
     });
 

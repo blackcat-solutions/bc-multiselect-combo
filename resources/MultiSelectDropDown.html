@@ -1,4 +1,7 @@
 <div data-dojo-attach-point="containerNode" class="bc-multi-select-dropdown">
-    <div data-dojo-type="dijit.form.TextBox"></div>
+    <div data-dojo-type="dijit.form.TextBox"
+         data-dojo-attach-point="dapFilterField"
+         data-dojo-props="placeHolder: 'type to filter'"
+         data-dojo-attach-event="onKeyUp: _handleFilterChange"></div>
     <div data-dojo-attach-point="dapGrid" class="grid-container"></div>
 </div>
