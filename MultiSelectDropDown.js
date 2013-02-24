@@ -9,11 +9,13 @@ define([
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./resources/MultiSelectDropDown.html",
+    "dijit/layout/_ContentPaneResizeMixin",
 
     "dijit/form/TextBox",
     "dijit/form/Button",
     "dijit/layout/ContentPane"
-], function (declare, on, Grid, Selection, Keyboard, selector, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template) {
+], function (declare, on, Grid, Selection, Keyboard, selector, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template,
+             _ContentPaneResizeMixin) {
 
     var MyGrid = declare([Grid, Selection, Keyboard], {
         showHeader: false,
@@ -22,7 +24,8 @@ define([
         deselectOnRefresh: false
     });
 
-    return declare("dgrid-multiselect-combo.MultiSelectDropDown", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin], {
+    return declare("dgrid-multiselect-combo.MultiSelectDropDown", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin,
+            _ContentPaneResizeMixin], {
 
         store: null,
 
@@ -52,6 +55,9 @@ define([
             });
 
             this._grid = grid;
+        },
+
+        onOpen: function() {
         },
 
         destroy: function() {

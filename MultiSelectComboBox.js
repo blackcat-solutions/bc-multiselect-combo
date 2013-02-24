@@ -35,6 +35,11 @@ define([
             });
         },
 
+        openDropDown: function() {
+            this.inherited(arguments);
+            this._dropDown.onOpen();
+        },
+
         destroy: function() {
             this.inherited(arguments);
             this._selectionHandler.remove();

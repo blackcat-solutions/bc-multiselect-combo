@@ -1,3 +1,11 @@
+.bc-multi-select-dropdown .dgrid {
+    height: 15em;
+}
+
+.bc-multi-select-dropdown .dgrid-scroller {
+    margin-top: 0px;
+}
+
 .bc-multi-select-dropdown .dgrid-selector {
     width: 1.8em;
 }
