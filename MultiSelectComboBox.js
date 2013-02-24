@@ -6,9 +6,12 @@ define([
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./resources/MultiSelectComboBox.html",
     "./MultiSelectDropDown",
+    "dijit/DropDownMenu",
+    "dijit/MenuItem",
 
     "dijit/form/ComboButton"
-], function (declare, on, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown) {
+], function (declare, on, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
+    DropDownMenu, MenuItem) {
 
     return declare("dgrid-multiselect-combo.MultiSelectComboBox", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin], {
 
@@ -23,12 +26,16 @@ define([
         _selectionHandler: null,
 
         postCreate: function() {
+            var dropDown = new DropDownMenu();
+
             this._dropDown = new MultiSelectDropDown({
                 store: this.store,
                 displayAttr: this.displayAttr
             });
 
-            this.dapButton.set('dropDown', this._dropDown);
+            dropDown.addChild(this._dropDown);
+
+            this.dapButton.set('dropDown', dropDown);
 
             this._selectionHandler = on(this.domNode, 'dgrid-select', function(evt){
                 console.log(JSON.stringify(evt.grid.selection));
