@@ -63,6 +63,10 @@ define([
             var query = {};
             query[this.displayAttr] = new RegExp('^.*' + this.dapFilterField.get('displayedValue') + '.*$');
             this._grid.set('query', query);
+        },
+
+        _applyButtonClicked: function() {
+            console.log('apply');
         }
     });
 
