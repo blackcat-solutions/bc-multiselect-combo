@@ -21,7 +21,8 @@ define([
         showHeader: false,
         selectionMode: 'multiple',
         allowSelectAll: true,
-        deselectOnRefresh: false
+        deselectOnRefresh: false,
+        noDataMessage: "No data matched your selection"
     });
 
     return declare("dgrid-multiselect-combo.MultiSelectDropDown", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin,

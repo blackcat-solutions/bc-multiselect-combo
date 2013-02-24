@@ -2,6 +2,13 @@
     height: 15em;
 }
 
+.bc-multi-select-dropdown .dgrid-no-data {
+    text-align: center;
+    font-style: italic;
+    padding: 10px 10px 0px 10px;
+    color: #aaaaaa;
+}
+
 .bc-multi-select-dropdown .dgrid-scroller {
     margin-top: 0px;
 }
