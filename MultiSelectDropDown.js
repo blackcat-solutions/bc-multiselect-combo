@@ -11,6 +11,7 @@ define([
     "dojo/text!./resources/MultiSelectDropDown.html",
 
     "dijit/form/TextBox",
+    "dijit/form/Button",
     "dijit/layout/ContentPane"
 ], function (declare, on, Grid, Selection, Keyboard, selector, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template) {
 

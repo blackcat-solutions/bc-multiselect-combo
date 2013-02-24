@@ -13,6 +13,10 @@
         h1 {
             margin-bottom: 1em;
         }
+
+        #myMultiSelect .dijitComboButton .dijitButtonText {
+            width: 10em;
+        }
     </style>
     <script src="../../dojo/dojo.js"
             data-dojo-config="async: true"></script>
@@ -27,6 +31,7 @@
                 function (dom, MultiSelectComboBox, Memory) {
                     var e = dom.byId('placeholder');
                     e.appendChild(new MultiSelectComboBox({
+                        id: 'myMultiSelect',
                         displayAttr: 'foo',
                         store: new Memory({
                             data: [
