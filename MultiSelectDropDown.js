@@ -1,16 +1,22 @@
 define([
     "dojo/_base/declare",
     "dgrid/OnDemandGrid",
+    "dgrid/Selection",
+    "dgrid/Keyboard",
+    "dgrid/selector",
     "dijit/_Widget",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./resources/MultiSelectDropDown.html",
 
-    "dijit/form/TextBox"
-], function (declare, OnDemandGrid, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template) {
+    "dijit/form/TextBox",
+    "dijit/layout/ContentPane"
+], function (declare, Grid, Selection, Keyboard, selector, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template) {
 
-    var MyGrid = declare([OnDemandGrid], {
-        showHeader: false
+    var MyGrid = declare([Grid, Selection, Keyboard], {
+        showHeader: false,
+        selectionMode: 'none',
+        allowSelectAll: true
     });
 
     return declare("dgrid-multiselect-combo.MultiSelectDropDown", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin], {
@@ -19,19 +25,22 @@ define([
 
         templateString: template,
         dapFilterField: null,
-        dapGrid: null,
+        dapGridContainer: null,
         displayAttr: null,
 
         _grid: null,
 
         postCreate: function() {
-            var cols = {};
-            cols[this.displayAttr] = {};
+            var cols = [
+                selector({}),
+                {field: this.displayAttr}
+            ];
+
             var grid = new MyGrid({
                 columns: cols,
                 store: this.store
             });
-            this.dapGrid.appendChild(grid.domNode);
+            this.dapGridContainer.set('content', grid);
             grid.refresh();
             this._grid = grid;
         },
