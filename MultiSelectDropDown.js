@@ -17,7 +17,8 @@ define([
     var MyGrid = declare([Grid, Selection, Keyboard], {
         showHeader: false,
         selectionMode: 'multiple',
-        allowSelectAll: true
+        allowSelectAll: true,
+        deselectOnRefresh: false
     });
 
     return declare("dgrid-multiselect-combo.MultiSelectDropDown", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin], {
