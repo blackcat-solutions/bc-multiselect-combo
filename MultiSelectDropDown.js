@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/on",
     "dgrid/OnDemandGrid",
     "dgrid/Selection",
     "dgrid/Keyboard",
@@ -11,11 +12,11 @@ define([
 
     "dijit/form/TextBox",
     "dijit/layout/ContentPane"
-], function (declare, Grid, Selection, Keyboard, selector, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template) {
+], function (declare, on, Grid, Selection, Keyboard, selector, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template) {
 
     var MyGrid = declare([Grid, Selection, Keyboard], {
         showHeader: false,
-        selectionMode: 'none',
+        selectionMode: 'multiple',
         allowSelectAll: true
     });
 
@@ -29,6 +30,7 @@ define([
         displayAttr: null,
 
         _grid: null,
+        _selectionHandler: null,
 
         postCreate: function() {
             var cols = [
@@ -40,9 +42,19 @@ define([
                 columns: cols,
                 store: this.store
             });
-            this.dapGridContainer.set('content', grid);
+            this.dapGridContainer.appendChild(grid.domNode);
             grid.refresh();
+
+            this._selectionHandler = on(grid.domNode, 'dgrid-select,dgrid-deselect', function(evt){
+                console.log(JSON.stringify(evt.grid.selection));
+            });
+
             this._grid = grid;
+        },
+
+        destroy: function() {
+            this._selectionHandler.remove();
+            this.inherited(arguments);
         },
 
         _handleFilterChange: function() {

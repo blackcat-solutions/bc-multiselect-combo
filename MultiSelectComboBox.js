@@ -1,6 +1,6 @@
 define([
     "dojo/_base/declare",
-    "dgrid/OnDemandGrid",
+    "dojo/on",
     "dijit/_Widget",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -8,7 +8,7 @@ define([
     "./MultiSelectDropDown",
 
     "dijit/form/ComboButton"
-], function (declare, OnDemandGrid, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown) {
+], function (declare, on, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown) {
 
     return declare("dgrid-multiselect-combo.MultiSelectComboBox", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin], {
 
@@ -20,6 +20,8 @@ define([
 
         _dropDown: null,
 
+        _selectionHandler: null,
+
         postCreate: function() {
             this._dropDown = new MultiSelectDropDown({
                 store: this.store,
@@ -27,6 +29,15 @@ define([
             });
 
             this.dapButton.set('dropDown', this._dropDown);
+
+            this._selectionHandler = on(this.domNode, 'dgrid-select', function(evt){
+                console.log(JSON.stringify(evt.grid.selection));
+            });
+        },
+
+        destroy: function() {
+            this.inherited(arguments);
+            this._selectionHandler.remove();
         }
     });
 
