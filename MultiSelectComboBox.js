@@ -15,8 +15,17 @@ define([
 
     return declare("dgrid-multiselect-combo.MultiSelectComboBox", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin], {
 
+        // store: Store
+        //        The store which gives the objects we are selecting.
         store: null,
+        // displayAttr: String
+        //        The name of the attribute of each object that should be displayed in the drop down.
         displayAttr: null,
+        // showApplyButton: Boolean
+        //        Whether to show an 'Apply' button (defaults to false).  If true, then an 'Apply' button will
+        //        be shown, and the selection state will only be updated when this button is pressed.  This is
+        //        useful when the action you perform on selection state change is costly.
+        showApplyButton: false,
 
         templateString: template,
         dapButton: null,
