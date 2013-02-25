@@ -42,7 +42,10 @@
                         w = new MultiSelectComboBox({
                             id: 'select1',
                             displayAttr: 'foo',
-                            labelWidth: '5em',
+                            emptyLabel: 'Select foobar',
+                            labelWidth: '8em',
+                            singularValueLabel: 'foobar',
+                            pluralValueLabel: 'foobars',
                             store: store,
                             onChange: function(value) {
                                 dom.byId('selection-output').innerHTML = JSON.stringify(value);

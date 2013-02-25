@@ -27,6 +27,9 @@ define([
         //        be shown, and the selection state will only be updated when this button is pressed.  This is
         //        useful when the action you perform on selection state change is costly.
         showApplyButton: false,
+        emptyLabel: "0 selected",
+        singularValueLabel: null,
+        pluralValueLabel: null,
         showClearAllButton: true,
         showSelectionCount: true,
         onChange: null,
@@ -95,6 +98,7 @@ define([
         },
 
         _updateLabel: function() {
+            var label;
             if (this.showSelectionCount) {
                 var count = 0, key, selection = this.get('selection');
                 for (key in selection) {
@@ -102,7 +106,20 @@ define([
                         count = count + 1;
                     }
                 }
-                this.dapButton.set('label', count + ' selected');
+                if (count > 0) {
+                    label = '' + count;
+                    if (count === 1 && this.singularValueLabel) {
+                        label = label + ' ' + this.singularValueLabel;
+                    }
+                    else if (count > 1 && this.pluralValueLabel) {
+                        label = label + ' ' + this.pluralValueLabel;
+                    }
+                    label = label + ' selected';
+                }
+                else {
+                    label = this.emptyLabel;
+                }
+                this.dapButton.set('label', label);
             }
         }
     });
