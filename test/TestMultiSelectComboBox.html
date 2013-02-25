@@ -30,26 +30,31 @@
         ],
                 function (dom, MultiSelectComboBox, Memory) {
                     var e = dom.byId('placeholder');
-                    e.appendChild(new MultiSelectComboBox({
-                        id: 'myMultiSelect',
-                        displayAttr: 'foo',
-                        showApplyButton: true,
-                        showClearAllButton: true,
-                        store: new Memory({
-                            data: [
-                                {id: '1', foo: 'aaa1'},
-                                {id: '2', foo: 'aaa2'},
-                                {id: '3', foo: 'aaa3'},
-                                {id: '4', foo: 'aaa4'},
-                                {id: '5', foo: 'aaa5'},
-                                {id: '6', foo: 'bbb1'},
-                                {id: '7', foo: 'bbb2'},
-                                {id: '8', foo: 'bbb3'},
-                                {id: '9', foo: 'bbb4'},
-                                {id: '10', foo: 'bbb5'}
-                            ]
-                        })
-                    }).domNode);
+                        w = new MultiSelectComboBox({
+                            id: 'myMultiSelect',
+                            displayAttr: 'foo',
+                            showApplyButton: true,
+                            showClearAllButton: true,
+                            store: new Memory({
+                                data: [
+                                    {id: '1', foo: 'aaa1'},
+                                    {id: '2', foo: 'aaa2'},
+                                    {id: '3', foo: 'aaa3'},
+                                    {id: '4', foo: 'aaa4'},
+                                    {id: '5', foo: 'aaa5'},
+                                    {id: '6', foo: 'bbb1'},
+                                    {id: '7', foo: 'bbb2'},
+                                    {id: '8', foo: 'bbb3'},
+                                    {id: '9', foo: 'bbb4'},
+                                    {id: '10', foo: 'bbb5'}
+                                ]
+                            })
+                        });
+
+                    e.appendChild(w.domNode);
+                    w.watch('selection', function(value){
+                        console.log(JSON.stringify(value));
+                    });
                 });
     </script>
 </head>

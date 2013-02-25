@@ -41,6 +41,7 @@ define([
 
         _grid: null,
         _selectionHandler: null,
+        _selection: null,
 
         postCreate: function() {
             var cols = [
@@ -48,7 +49,8 @@ define([
                     {field: this.displayAttr}
                 ],
                 applyButton,
-                clearAllButton;
+                clearAllButton,
+                self = this;
 
             var grid = new MyGrid({
                 columns: cols,
@@ -59,6 +61,10 @@ define([
 
             this._selectionHandler = on(grid.domNode, 'dgrid-select,dgrid-deselect', function(evt){
                 console.log(JSON.stringify(evt.grid.selection));
+                // if we are not showing an apply button, change the property immediately
+                if (!self.showApplyButton) {
+                    self.set('selection', evt.grid.selection);
+                }
             });
 
             this._grid = grid;
@@ -96,10 +102,20 @@ define([
 
         _applyButtonClicked: function() {
             console.log('apply');
+            this.set('selection', this._grid.selection);
         },
 
         _clearButtonClicked: function() {
+            // TODO - impleent clear button
             console.log('clear');
+        },
+
+        _setSelectionAttr: function(value) {
+            this._selection = value;
+        },
+
+        _getSelectionAttr: function() {
+            return this._selection;
         }
     });
 

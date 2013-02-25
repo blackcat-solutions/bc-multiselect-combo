@@ -31,17 +31,23 @@ define([
         dapButton: null,
 
         _dropDown: null,
-
         _selectionHandler: null,
+        _selection: null,
 
         postCreate: function() {
-            var dropDown = new DropDownMenu();
+            var dropDown = new DropDownMenu(),
+                self = this;
 
             this._dropDown = new MultiSelectDropDown({
                 store: this.store,
                 displayAttr: this.displayAttr,
                 showApplyButton: this.showApplyButton,
                 showClearAllButton: this.showClearAllButton
+            });
+
+            this._dropDown.watch('selection', function(value){
+                console.log('selection changed');
+                self.set('selection', value);
             });
 
             dropDown.addChild(this._dropDown);
@@ -61,6 +67,14 @@ define([
         destroy: function() {
             this.inherited(arguments);
             this._selectionHandler.remove();
+        },
+
+        _setSelectionAttr: function(value) {
+            this._selection = value;
+        },
+
+        _getSelectionAttr: function() {
+            return this._selection;
         }
     });
 
