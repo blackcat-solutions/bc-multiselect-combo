@@ -59,13 +59,15 @@ define([
             this.dapGridContainer.appendChild(grid.domNode);
             grid.refresh();
 
-            this._selectionHandler = on(grid.domNode, 'dgrid-select,dgrid-deselect', function(evt){
-                console.log(JSON.stringify(evt.grid.selection));
-                // if we are not showing an apply button, change the property immediately
-                if (!self.showApplyButton) {
-                    self.set('selection', evt.grid.selection);
-                }
-            });
+            this.own(
+                on(grid.domNode, 'dgrid-select,dgrid-deselect', function(evt){
+                    console.log(JSON.stringify(evt.grid.selection));
+                    // if we are not showing an apply button, change the property immediately
+                    if (!self.showApplyButton) {
+                        self.set('selection', evt.grid.selection);
+                    }
+                })
+            );
 
             this._grid = grid;
 
