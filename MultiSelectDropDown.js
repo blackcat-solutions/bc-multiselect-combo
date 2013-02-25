@@ -102,13 +102,14 @@ define([
         },
 
         _applyButtonClicked: function() {
-            console.log('apply');
             this.set('selection', JSON.parse(JSON.stringify(this._grid.selection))); // create a copy
         },
 
         _clearButtonClicked: function() {
-            // TODO - impleent clear button
-            console.log('clear');
+            this._grid.clearSelection();
+            if (this.showApplyButton) {
+                this._applyButtonClicked();
+            }
         }
     });
 
