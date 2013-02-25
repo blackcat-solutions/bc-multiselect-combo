@@ -15,7 +15,7 @@ define([
 ], function (declare, on, aspect, query, style, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
     DropDownMenu) {
 
-    return declare("dgrid-multiselect-combo.MultiSelectComboBox", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin], {
+    return declare("bc-multiselect-combo.MultiSelectComboBox", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin], {
 
         // store: Store
         //        The store which gives the objects we are selecting.

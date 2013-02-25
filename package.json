@@ -1,5 +1,5 @@
 {
-  "name": "bc-multi-select",
+  "name": "bc-multiselect-combo",
   "author": "Simon Godden",
   "version": "0.1",
   "description": "Rich multi-select combo component providing type-ahead filtering using dgrid for large data sets",
@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type":"git",
-    "url":"http://github.com/blackcat-solutions/dgrid-multiselect-combo.git"
+    "url":"http://github.com/blackcat-solutions/bc-multiselect-combo.git"
   },
   "dependencies": {
     "dgrid": "*",

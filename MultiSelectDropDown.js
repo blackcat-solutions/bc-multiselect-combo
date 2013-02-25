@@ -26,7 +26,7 @@ define([
         noDataMessage: "No data matched your selection"
     });
 
-    return declare("dgrid-multiselect-combo.MultiSelectDropDown", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin,
+    return declare("bc-multiselect-combo.MultiSelectDropDown", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin,
             _ContentPaneResizeMixin], {
 
         store: null,
