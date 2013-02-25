@@ -48,7 +48,7 @@ define([
             });
 
             this._dropDown.watch('selection', function(){
-                self.set('selection', self._dropDown.get('selection'));
+                self.set('selection', JSON.parse(JSON.stringify(self._dropDown.get('selection'))));
             });
 
             dropDown.addChild(this._dropDown);

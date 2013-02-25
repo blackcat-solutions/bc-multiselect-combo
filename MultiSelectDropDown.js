@@ -63,7 +63,7 @@ define([
                     console.log(JSON.stringify(evt.grid.selection));
                     // if we are not showing an apply button, change the property immediately
                     if (!self.showApplyButton) {
-                        self.set('selection', evt.grid.selection);
+                        self.set('selection', JSON.parse(JSON.stringify(evt.grid.selection)));
                     }
                 })
             );
