@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/on",
+    "dojo/aspect",
     "dojo/query",
     "dojo/dom-style",
     "dijit/_WidgetBase",
@@ -11,7 +12,7 @@ define([
     "dijit/DropDownMenu",
 
     "dijit/form/ComboButton"
-], function (declare, on, query, style, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
+], function (declare, on, aspect, query, style, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
     DropDownMenu) {
 
     return declare("dgrid-multiselect-combo.MultiSelectComboBox", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin], {
@@ -52,6 +53,7 @@ define([
                 showClearAllButton: this.showClearAllButton,
                 onApply: function(){
                     self.dapButton.closeDropDown();
+                    self._dropDown.onClose();
                 }
             });
 
@@ -64,6 +66,10 @@ define([
 
             this.dapButton.set('dropDown', dropDown);
 
+            aspect.after(this.dapButton, 'closeDropDown', function(){
+                self._dropDown.onClose();
+            });
+
             if (this.labelWidth) {
                 style.set(
                     query('.dijitButtonText', this.dapButton.domNode)[0],
@@ -71,11 +77,6 @@ define([
                     this.labelWidth
                 );
             }
-        },
-
-        openDropDown: function() {
-            this.inherited(arguments);
-            this._dropDown.onOpen();
         },
 
         destroy: function() {

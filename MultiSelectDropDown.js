@@ -86,7 +86,9 @@ define([
             }
         },
 
-        onOpen: function() {
+        onClose: function() {
+            this.dapFilterField.set('value', null);
+            this._handleFilterChange();
         },
 
         destroy: function() {
