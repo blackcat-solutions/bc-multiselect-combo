@@ -53,8 +53,10 @@
 
                     e.appendChild(w.domNode);
                     w.watch('selection', function(){
-                        console.log("Selection changed: " + JSON.stringify(w.get('selection')));
+                        dom.byId('selection-output').innerHTML = JSON.stringify(w.get('selection'));
                     });
+
+
                 });
     </script>
 </head>
@@ -62,8 +64,13 @@
 
 <h1>Multi-select combo tests</h1>
 
-<div id="placeholder">
-
+<div>
+    <div id="placeholder" style="display: inline-block; margin-right: 5em;">
+    </div>
+    <div style="display: inline">
+        <span>Selection: </span>
+        <span id="selection-output"></span>
+    </div>
 </div>
 
 </body>
