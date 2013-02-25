@@ -25,6 +25,7 @@ define([
         //        be shown, and the selection state will only be updated when this button is pressed.  This is
         //        useful when the action you perform on selection state change is costly.
         showApplyButton: false,
+        showClearAllButton: false,
 
         templateString: template,
         dapButton: null,
@@ -38,7 +39,9 @@ define([
 
             this._dropDown = new MultiSelectDropDown({
                 store: this.store,
-                displayAttr: this.displayAttr
+                displayAttr: this.displayAttr,
+                showApplyButton: this.showApplyButton,
+                showClearAllButton: this.showClearAllButton
             });
 
             dropDown.addChild(this._dropDown);

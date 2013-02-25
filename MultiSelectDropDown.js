@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/lang",
     "dojo/on",
     "dgrid/OnDemandGrid",
     "dgrid/Selection",
@@ -10,12 +11,12 @@ define([
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./resources/MultiSelectDropDown.html",
     "dijit/layout/_ContentPaneResizeMixin",
+    "dijit/form/Button",
 
     "dijit/form/TextBox",
-    "dijit/form/Button",
     "dijit/layout/ContentPane"
-], function (declare, on, Grid, Selection, Keyboard, selector, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template,
-             _ContentPaneResizeMixin) {
+], function (declare, lang, on, Grid, Selection, Keyboard, selector, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template,
+             _ContentPaneResizeMixin, Button) {
 
     var MyGrid = declare([Grid, Selection, Keyboard], {
         showHeader: false,
@@ -29,20 +30,25 @@ define([
             _ContentPaneResizeMixin], {
 
         store: null,
+        displayAttr: null,
+        showApplyButton: false,
+        showClearAllButton: false,
 
         templateString: template,
         dapFilterField: null,
         dapGridContainer: null,
-        displayAttr: null,
+        dapButtonContainer: null,
 
         _grid: null,
         _selectionHandler: null,
 
         postCreate: function() {
             var cols = [
-                selector({}),
-                {field: this.displayAttr}
-            ];
+                    selector({}),
+                    {field: this.displayAttr}
+                ],
+                applyButton,
+                clearAllButton;
 
             var grid = new MyGrid({
                 columns: cols,
@@ -56,6 +62,22 @@ define([
             });
 
             this._grid = grid;
+
+            if (this.showApplyButton) {
+                applyButton = new Button({
+                    label: 'Apply',
+                    onClick: lang.hitch(this, this._applyButtonClicked)
+                });
+                this.dapButtonContainer.appendChild(applyButton.domNode);
+            }
+
+            if (this.showClearAllButton) {
+                clearAllButton = new Button({
+                    label: 'Clear all',
+                    onClick: lang.hitch(this, this._clearButtonClicked)
+                });
+                this.dapButtonContainer.appendChild(clearAllButton.domNode);
+            }
         },
 
         onOpen: function() {
@@ -74,6 +96,10 @@ define([
 
         _applyButtonClicked: function() {
             console.log('apply');
+        },
+
+        _clearButtonClicked: function() {
+            console.log('clear');
         }
     });
 
