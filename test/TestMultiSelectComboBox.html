@@ -52,8 +52,8 @@
                         });
 
                     e.appendChild(w.domNode);
-                    w.watch('selection', function(value){
-                        console.log(JSON.stringify(value));
+                    w.watch('selection', function(){
+                        console.log("Selection changed: " + JSON.stringify(w.get('selection')));
                     });
                 });
     </script>

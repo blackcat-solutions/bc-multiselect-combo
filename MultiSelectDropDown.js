@@ -41,7 +41,6 @@ define([
 
         _grid: null,
         _selectionHandler: null,
-        _selection: null,
 
         postCreate: function() {
             var cols = [
@@ -104,20 +103,12 @@ define([
 
         _applyButtonClicked: function() {
             console.log('apply');
-            this.set('selection', this._grid.selection);
+            this.set('selection', JSON.parse(JSON.stringify(this._grid.selection))); // create a copy
         },
 
         _clearButtonClicked: function() {
             // TODO - impleent clear button
             console.log('clear');
-        },
-
-        _setSelectionAttr: function(value) {
-            this._selection = value;
-        },
-
-        _getSelectionAttr: function() {
-            return this._selection;
         }
     });
 

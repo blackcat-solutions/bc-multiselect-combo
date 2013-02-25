@@ -32,7 +32,6 @@ define([
 
         _dropDown: null,
         _selectionHandler: null,
-        _selection: null,
 
         postCreate: function() {
             var dropDown = new DropDownMenu(),
@@ -45,18 +44,13 @@ define([
                 showClearAllButton: this.showClearAllButton
             });
 
-            this._dropDown.watch('selection', function(value){
-                console.log('selection changed');
-                self.set('selection', value);
+            this._dropDown.watch('selection', function(){
+                self.set('selection', self._dropDown.get('selection'));
             });
 
             dropDown.addChild(this._dropDown);
 
             this.dapButton.set('dropDown', dropDown);
-
-            this._selectionHandler = on(this.domNode, 'dgrid-select', function(evt){
-                console.log(JSON.stringify(evt.grid.selection));
-            });
         },
 
         openDropDown: function() {
@@ -67,14 +61,6 @@ define([
         destroy: function() {
             this.inherited(arguments);
             this._selectionHandler.remove();
-        },
-
-        _setSelectionAttr: function(value) {
-            this._selection = value;
-        },
-
-        _getSelectionAttr: function() {
-            return this._selection;
         }
     });
 
