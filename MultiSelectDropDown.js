@@ -60,10 +60,9 @@ define([
 
             this.own(
                 on(grid.domNode, 'dgrid-select,dgrid-deselect', function(evt){
-                    console.log(JSON.stringify(evt.grid.selection));
                     // if we are not showing an apply button, change the property immediately
                     if (!self.showApplyButton) {
-                        self.set('selection', JSON.parse(JSON.stringify(evt.grid.selection)));
+                        self._applySelection();
                     }
                 })
             );
