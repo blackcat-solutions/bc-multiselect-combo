@@ -28,6 +28,7 @@ define([
         //        useful when the action you perform on selection state change is costly.
         showApplyButton: false,
         showClearAllButton: false,
+        showSelectionCount: true,
 
         templateString: template,
         dapButton: null,
@@ -52,6 +53,7 @@ define([
 
             this._dropDown.watch('selection', function(){
                 self.set('selection', JSON.parse(JSON.stringify(self._dropDown.get('selection'))));
+                self._updateLabel();
             });
 
             dropDown.addChild(this._dropDown);
@@ -75,6 +77,18 @@ define([
         destroy: function() {
             this.inherited(arguments);
             this._selectionHandler.remove();
+        },
+
+        _updateLabel: function() {
+            if (this.showSelectionCount) {
+                var count = 0, key, selection = this.get('selection');
+                for (key in selection) {
+                    if (selection.hasOwnProperty(key)) {
+                        count = count + 1;
+                    }
+                }
+                this.dapButton.set('label', count + ' selected');
+            }
         }
     });
 
