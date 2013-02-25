@@ -27,7 +27,7 @@ define([
         //        be shown, and the selection state will only be updated when this button is pressed.  This is
         //        useful when the action you perform on selection state change is costly.
         showApplyButton: false,
-        showClearAllButton: false,
+        showClearAllButton: true,
         showSelectionCount: true,
 
         templateString: template,
@@ -77,6 +77,18 @@ define([
         destroy: function() {
             this.inherited(arguments);
             this._selectionHandler.remove();
+        },
+
+        _setSelectionAttr: function(selection) {
+            this._set('selection', selection);
+            var key, values = [];
+            for (key in selection) {
+                if (selection.hasOwnProperty(key)) {
+                    values.push(this.store.get(key));
+                }
+            }
+            console.log('Set value');
+            this.set('value', values);
         },
 
         _updateLabel: function() {
