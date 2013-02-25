@@ -107,6 +107,7 @@ define([
 
         _clearButtonClicked: function() {
             this._grid.clearSelection();
+            // if we are showing an apply button we need to explicitly broadcast the selection change
             if (this.showApplyButton) {
                 this._applyButtonClicked();
             }
