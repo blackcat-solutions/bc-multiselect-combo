@@ -1,6 +1,8 @@
 define([
     "dojo/_base/declare",
     "dojo/on",
+    "dojo/query",
+    "dojo/dom-style",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -9,7 +11,7 @@ define([
     "dijit/DropDownMenu",
 
     "dijit/form/ComboButton"
-], function (declare, on, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
+], function (declare, on, query, style, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
     DropDownMenu) {
 
     return declare("dgrid-multiselect-combo.MultiSelectComboBox", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin], {
@@ -29,6 +31,7 @@ define([
 
         templateString: template,
         dapButton: null,
+        labelWidth: null,
 
         _dropDown: null,
         _selectionHandler: null,
@@ -54,6 +57,10 @@ define([
             dropDown.addChild(this._dropDown);
 
             this.dapButton.set('dropDown', dropDown);
+
+            if (this.labelWidth) {
+                style.set(query('.dijitButtonText', this.dapButton.domNode)[0], 'width', this.labelWidth);
+            }
         },
 
         openDropDown: function() {
