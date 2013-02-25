@@ -29,6 +29,7 @@ define([
         showApplyButton: false,
         showClearAllButton: true,
         showSelectionCount: true,
+        onChange: null,
 
         templateString: template,
         dapButton: null,
@@ -87,8 +88,10 @@ define([
                     values.push(this.store.get(key));
                 }
             }
-            console.log('Set value');
             this.set('value', values);
+            if (this.onChange) {
+                this.onChange(values);
+            }
         },
 
         _updateLabel: function() {

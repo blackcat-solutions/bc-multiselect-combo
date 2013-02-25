@@ -43,26 +43,24 @@
                             id: 'select1',
                             displayAttr: 'foo',
                             labelWidth: '5em',
-                            store: store
+                            store: store,
+                            onChange: function(value) {
+                                dom.byId('selection-output').innerHTML = JSON.stringify(value);
+                            }
                         }),
                         w2 = new MultiSelectComboBox({
                             id: 'select2',
                             displayAttr: 'foo',
                             labelWidth: '10em',
                             showApplyButton: true,
-                            store: store
+                            store: store,
+                            onChange: function(value) {
+                                dom.byId('selection-output2').innerHTML = JSON.stringify(value);
+                            }
                         });
 
                     dom.byId('placeholder').appendChild(w.domNode);
-                    w.watch('value', function(){
-                        dom.byId('selection-output').innerHTML = JSON.stringify(w.get('value'));
-                    });
-
                     dom.byId('placeholder2').appendChild(w2.domNode);
-                    w2.watch('value', function(){
-                        dom.byId('selection-output2').innerHTML = JSON.stringify(w2.get('value'));
-                    });
-
 
                 });
     </script>
