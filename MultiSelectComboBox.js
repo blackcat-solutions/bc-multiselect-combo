@@ -59,7 +59,11 @@ define([
             this.dapButton.set('dropDown', dropDown);
 
             if (this.labelWidth) {
-                style.set(query('.dijitButtonText', this.dapButton.domNode)[0], 'width', this.labelWidth);
+                style.set(
+                    query('.dijitButtonText', this.dapButton.domNode)[0],
+                    'width',
+                    this.labelWidth
+                );
             }
         },
 
