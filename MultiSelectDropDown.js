@@ -102,16 +102,17 @@ define([
         },
 
         _applyButtonClicked: function() {
-            this.set('selection', JSON.parse(JSON.stringify(this._grid.selection))); // create a copy or various things will go wrong
+            this._applySelection();
             this.emit('Apply', {});
+        },
+
+        _applySelection: function() {
+            this.set('selection', JSON.parse(JSON.stringify(this._grid.selection))); // create a copy or various things will go wrong
         },
 
         _clearButtonClicked: function() {
             this._grid.clearSelection();
-            // if we are showing an apply button we need to explicitly broadcast the selection change
-            if (this.showApplyButton) {
-                this._applyButtonClicked();
-            }
+            this._applySelection();
         }
     });
 

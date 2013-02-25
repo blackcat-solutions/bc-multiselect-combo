@@ -29,31 +29,43 @@
             "dojo/domReady!"
         ],
                 function (dom, MultiSelectComboBox, Memory) {
-                    var e = dom.byId('placeholder');
+                    var store = new Memory({
+                            data: [
+                                {id: '1', foo: 'aaa1'},
+                                {id: '2', foo: 'aaa2'},
+                                {id: '3', foo: 'aaa3'},
+                                {id: '4', foo: 'aaa4'},
+                                {id: '5', foo: 'aaa5'},
+                                {id: '6', foo: 'bbb1'},
+                                {id: '7', foo: 'bbb2'},
+                                {id: '8', foo: 'bbb3'},
+                                {id: '9', foo: 'bbb4'},
+                                {id: '10', foo: 'bbb5'}
+                            ]
+                        }),
                         w = new MultiSelectComboBox({
-                            id: 'myMultiSelect',
+                            id: 'select1',
                             displayAttr: 'foo',
                             showApplyButton: true,
                             showClearAllButton: true,
-                            store: new Memory({
-                                data: [
-                                    {id: '1', foo: 'aaa1'},
-                                    {id: '2', foo: 'aaa2'},
-                                    {id: '3', foo: 'aaa3'},
-                                    {id: '4', foo: 'aaa4'},
-                                    {id: '5', foo: 'aaa5'},
-                                    {id: '6', foo: 'bbb1'},
-                                    {id: '7', foo: 'bbb2'},
-                                    {id: '8', foo: 'bbb3'},
-                                    {id: '9', foo: 'bbb4'},
-                                    {id: '10', foo: 'bbb5'}
-                                ]
-                            })
+                            store: store
+                        }),
+                        w2 = new MultiSelectComboBox({
+                            id: 'select2',
+                            displayAttr: 'foo',
+                            showApplyButton: false,
+                            showClearAllButton: true,
+                            store: store
                         });
 
-                    e.appendChild(w.domNode);
+                    dom.byId('placeholder').appendChild(w.domNode);
                     w.watch('selection', function(){
                         dom.byId('selection-output').innerHTML = JSON.stringify(w.get('selection'));
+                    });
+
+                    dom.byId('placeholder2').appendChild(w2.domNode);
+                    w2.watch('selection', function(){
+                        dom.byId('selection-output2').innerHTML = JSON.stringify(w.get('selection'));
                     });
 
 
@@ -70,6 +82,15 @@
     <div style="display: inline">
         <span>Selection: </span>
         <span id="selection-output"></span>
+    </div>
+</div>
+
+<div>
+    <div id="placeholder2" style="display: inline-block; margin-right: 5em;">
+    </div>
+    <div style="display: inline">
+        <span>Selection: </span>
+        <span id="selection-output2"></span>
     </div>
 </div>
 
