@@ -103,6 +103,7 @@ define([
 
         _applyButtonClicked: function() {
             this.set('selection', JSON.parse(JSON.stringify(this._grid.selection))); // create a copy or various things will go wrong
+            this.emit('Apply', {});
         },
 
         _clearButtonClicked: function() {

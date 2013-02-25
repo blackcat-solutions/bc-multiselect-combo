@@ -41,7 +41,10 @@ define([
                 store: this.store,
                 displayAttr: this.displayAttr,
                 showApplyButton: this.showApplyButton,
-                showClearAllButton: this.showClearAllButton
+                showClearAllButton: this.showClearAllButton,
+                onApply: function(){
+                    self.dapButton.closeDropDown();
+                }
             });
 
             this._dropDown.watch('selection', function(){
