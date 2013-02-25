@@ -5,7 +5,7 @@ define([
     "dgrid/Selection",
     "dgrid/Keyboard",
     "dgrid/selector",
-    "dijit/_Widget",
+    "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./resources/MultiSelectDropDown.html",
@@ -14,7 +14,7 @@ define([
     "dijit/form/TextBox",
     "dijit/form/Button",
     "dijit/layout/ContentPane"
-], function (declare, on, Grid, Selection, Keyboard, selector, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template,
+], function (declare, on, Grid, Selection, Keyboard, selector, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template,
              _ContentPaneResizeMixin) {
 
     var MyGrid = declare([Grid, Selection, Keyboard], {
@@ -25,7 +25,7 @@ define([
         noDataMessage: "No data matched your selection"
     });
 
-    return declare("dgrid-multiselect-combo.MultiSelectDropDown", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin,
+    return declare("dgrid-multiselect-combo.MultiSelectDropDown", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin,
             _ContentPaneResizeMixin], {
 
         store: null,

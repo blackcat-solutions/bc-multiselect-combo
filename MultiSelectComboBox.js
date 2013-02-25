@@ -1,19 +1,18 @@
 define([
     "dojo/_base/declare",
     "dojo/on",
-    "dijit/_Widget",
+    "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./resources/MultiSelectComboBox.html",
     "./MultiSelectDropDown",
     "dijit/DropDownMenu",
-    "dijit/MenuItem",
 
     "dijit/form/ComboButton"
-], function (declare, on, _Widget, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
-    DropDownMenu, MenuItem) {
+], function (declare, on, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
+    DropDownMenu) {
 
-    return declare("dgrid-multiselect-combo.MultiSelectComboBox", [_Widget, _TemplatedMixin, _WidgetsInTemplatedMixin], {
+    return declare("dgrid-multiselect-combo.MultiSelectComboBox", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin], {
 
         // store: Store
         //        The store which gives the objects we are selecting.
