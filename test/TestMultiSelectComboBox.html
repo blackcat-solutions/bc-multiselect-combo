@@ -13,6 +13,14 @@
         h1 {
             margin-bottom: 1em;
         }
+
+        h2 {
+            margin-top: 1em;
+        }
+
+        hr {
+            margin-top: 2em;
+        }
     </style>
     <script src="../../dojo/dojo.js"
             data-dojo-config="async: true"></script>
@@ -101,7 +109,11 @@
     </div>
 </div>
 
+<hr>
+
 <h2>Only change selection when apply pressed.</h2>
+<p>Useful when the action taken on change of selection is expensive and you only want to do it when the user
+has finished making all their selections.</p>
 <div>
     <div id="placeholder2" style="display: inline-block; margin-right: 5em;">
     </div>
@@ -110,6 +122,8 @@
         <span id="selection-output2"></span>
     </div>
 </div>
+
+<hr>
 
 <h2>Singular and plural labels in the selection count.</h2>
 <div>
