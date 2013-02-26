@@ -92,6 +92,11 @@ define([
             this._handleFilterChange();
         },
 
+        onOpen: function() {
+            this.inherited(arguments);
+            this._grid.refresh();
+        },
+
         destroy: function() {
             this._selectionHandler.remove();
             this.inherited(arguments);

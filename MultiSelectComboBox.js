@@ -81,6 +81,10 @@ define([
                 }
             });
 
+            aspect.after(this.dapButton, 'openDropDown', function(){
+                self._dropDown.onOpen();
+            });
+
             if (this.labelWidth) {
                 style.set(
                     query('.dijitButtonText', this.dapButton.domNode)[0],
