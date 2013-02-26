@@ -98,7 +98,7 @@ define([
 
         _handleFilterChange: function() {
             var query = {};
-            query[this.displayAttr] = new RegExp('^.*' + this.dapFilterField.get('displayedValue') + '.*$');
+            query[this.displayAttr] = new RegExp('^.*' + this.dapFilterField.get('displayedValue') + '.*$', 'i');
             this._grid.set('query', query);
         },
 
