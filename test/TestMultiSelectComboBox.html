@@ -19,62 +19,70 @@
     <script>
         require([
             "dojo/dom",
-            "dgrid-multiselect-combo/MultiSelectComboBox",
+            "bc-multiselect-combo/MultiSelectComboBox",
             "dojo/store/Memory",
+            "dojo/store/JsonRest",
+            "dojo/request/xhr",
+            "dojo/_base/array",
 
             "dojo/domReady!"
         ],
-                function (dom, MultiSelectComboBox, Memory) {
-                    var store = new Memory({
-                            data: [
-                                {id: '1', foo: 'aaa1'},
-                                {id: '2', foo: 'aaa2'},
-                                {id: '3', foo: 'aaa3'},
-                                {id: '4', foo: 'aaa4'},
-                                {id: '5', foo: 'aaa5'},
-                                {id: '6', foo: 'bbb1'},
-                                {id: '7', foo: 'bbb2'},
-                                {id: '8', foo: 'bbb3'},
-                                {id: '9', foo: 'bbb4'},
-                                {id: '10', foo: 'bbb5'}
-                            ]
-                        }),
+                function (dom, MultiSelectComboBox, Memory, JsonRest, xhr, array) {
+                    var store, w, w2, w3;
+
+                    // convert that to a memory
+                    xhr.get('./iso-countries.json').then(function(response){
+                        var items = JSON.parse(response), data = [];
+                        array.forEach(items, function(item){
+                            data.push({
+                                id: item['country-code'],
+                                name: item.name
+                            })
+                        });
+
+                        store = new Memory({
+                            data: data
+                        });
+
                         w = new MultiSelectComboBox({
                             id: 'select1',
-                            displayAttr: 'foo',
+                            displayAttr: 'name',
                             labelWidth: '5em',
                             store: store,
                             onChange: function(value) {
                                 dom.byId('selection-output').innerHTML = JSON.stringify(value);
                             }
-                        }),
+                        });
+
                         w2 = new MultiSelectComboBox({
                             id: 'select2',
-                            displayAttr: 'foo',
+                            displayAttr: 'name',
                             labelWidth: '10em',
                             showApplyButton: true,
                             store: store,
                             onChange: function(value) {
                                 dom.byId('selection-output2').innerHTML = JSON.stringify(value);
                             }
-                        }),
+                        });
+
                         w3 = new MultiSelectComboBox({
                             id: 'select3',
-                            displayAttr: 'foo',
-                            emptyLabel: 'Select foobar',
+                            displayAttr: 'name',
+                            emptyLabel: 'Select countries',
                             labelWidth: '8em',
-                            singularValueLabel: 'foobar',
-                            pluralValueLabel: 'foobars',
+                            singularValueLabel: 'country',
+                            pluralValueLabel: 'countries',
                             store: store,
                             onChange: function(value) {
                                 dom.byId('selection-output3').innerHTML = JSON.stringify(value);
                             }
-                        })
-                            ;
+                        });
 
-                    dom.byId('placeholder').appendChild(w.domNode);
-                    dom.byId('placeholder2').appendChild(w2.domNode);
-                    dom.byId('placeholder3').appendChild(w3.domNode);
+                        dom.byId('placeholder').appendChild(w.domNode);
+                        dom.byId('placeholder2').appendChild(w2.domNode);
+                        dom.byId('placeholder3').appendChild(w3.domNode);
+                    });
+
 
                 });
     </script>
