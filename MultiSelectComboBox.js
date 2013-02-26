@@ -68,6 +68,17 @@ define([
 
             aspect.after(this.dapButton, 'closeDropDown', function(){
                 self._dropDown.onClose();
+                if (self.showApplyButton) {
+                    // set the selection on the grid to the one last applied by the 'Apply' button in case
+                    // the user closed without applying.
+                    var s = self.get('selection');
+                    if (s) {
+                        s = JSON.parse(JSON.stringify(s)); // make a copy
+                    } else {
+                        s = {};
+                    }
+                    self._dropDown.setSelection(s);
+                }
             });
 
             if (this.labelWidth) {

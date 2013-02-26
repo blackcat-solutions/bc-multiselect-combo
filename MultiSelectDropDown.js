@@ -87,6 +87,7 @@ define([
         },
 
         onClose: function() {
+            this.inherited(arguments);
             this.dapFilterField.set('value', null);
             this._handleFilterChange();
         },
@@ -94,6 +95,11 @@ define([
         destroy: function() {
             this._selectionHandler.remove();
             this.inherited(arguments);
+        },
+
+        setSelection: function(selection) {
+            this._grid.selection = selection;
+            this._grid.refresh();
         },
 
         _handleFilterChange: function() {
@@ -113,7 +119,9 @@ define([
 
         _clearButtonClicked: function() {
             this._grid.clearSelection();
-            this._applySelection();
+            if (!this.showApplyButton) {
+                this._applySelection();
+            }
         }
     });
 
