@@ -20,18 +20,17 @@ This is so that we can force the text field to have the correct width for the dr
 Example:
 
 ```javascript
-w2 = new MultiSelectComboBox({
-  id: 'select2',
+w = new MultiSelectComboBox({
   displayAttr: 'name',
   labelWidth: '10em',
   showApplyButton: true,
   showFilterField: true,
   store: store,
   onChange: function (value) {
-    dom.byId('selection-output2').innerHTML = JSON.stringify(value);
+    console.debug(JSON.stringify(value));
   }
-}).placeAt(dom.byId('placeholder2'));
-w2.startup();
+}).placeAt(dom.byId('placeholder'));
+w.startup();
 ```
 
 Limitations
