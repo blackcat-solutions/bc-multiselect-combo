@@ -10,10 +10,11 @@ define([
     "dojo/text!./resources/MultiSelectComboBox.html",
     "./MultiSelectDropDown",
     "dijit/DropDownMenu",
+    "dojo/dom-geometry",
 
     "dijit/form/ComboButton"
 ], function (declare, on, aspect, query, style, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
-    DropDownMenu) {
+    DropDownMenu, geom) {
 
     return declare("bc-multiselect-combo.MultiSelectComboBox", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin], {
 
@@ -28,29 +29,53 @@ define([
         //        be shown, and the selection state will only be updated when this button is pressed.  This is
         //        useful when the action you perform on selection state change is costly.
         showApplyButton: false,
+        // showFieldField: Boolean
+        //        Whether to show a filter field that allows the user to perform type-ahead filtering of the entries.
+        showFilterField: false,
+        // emptyLabel: {string}
+        //        The label to show when no entries are selected.
         emptyLabel: "0 selected",
+        // singularValueLabel: {string}
+        //        The singular noun to go in to the selection count string when showing selection counts.
         singularValueLabel: null,
+        // pluralValueLabel: {string}
+        //        The plural noun to go in to the selection count string when showing selection counts.
         pluralValueLabel: null,
+        // showClearAllButton: Boolean
+        //        Whether to show a button that clears all selections.
         showClearAllButton: true,
+        // clearAllButtonLabel: {string}
+        //        The label to show in the clear all button.  There are use cases where it might be more logical
+        //        to show text such as "Select all".
+        clearAllButtonLabel: "Clear all",
+        // showSelectionCount: Boolean
+        //        Whether to show a selection count in the main button text.
         showSelectionCount: true,
+        // onChange: Function
+        //        A function to be called when the selected values change.
         onChange: null,
+        // labelWidth: {string}
+        //        A CSS width value for the label part of the combo button.
+        labelWidth: null,
 
         templateString: template,
         dapButton: null,
-        labelWidth: null,
 
         _dropDown: null,
         _selectionHandler: null,
 
         postCreate: function() {
+
             var dropDown = new DropDownMenu(),
                 self = this;
 
             this._dropDown = new MultiSelectDropDown({
                 store: this.store,
                 displayAttr: this.displayAttr,
+                showFilterField: this.showFilterField,
                 showApplyButton: this.showApplyButton,
                 showClearAllButton: this.showClearAllButton,
+                clearAllButtonLabel: this.clearAllButtonLabel,
                 onApply: function(){
                     self.dapButton.closeDropDown();
                     self._dropDown.onClose();
@@ -92,6 +117,12 @@ define([
                     this.labelWidth
                 );
             }
+        },
+
+        startup: function() {
+            this.inherited(arguments);
+            // TODO - I know this is wrong, just a little tired at this stage - someone please tell me how to handle this properly.
+            this._dropDown.setWidth(geom.getContentBox(this.dapButton.domNode).w - 4);
         },
 
         destroy: function() {

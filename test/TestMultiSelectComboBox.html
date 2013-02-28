@@ -28,59 +28,71 @@
         require([
             "dojo/dom",
             "bc-multiselect-combo/MultiSelectComboBox",
-            "dojo/store/JsonRest",
+            "dojo/store/Memory",
             "dojo/request/xhr",
             "dojo/_base/array",
 
             "dojo/domReady!"
         ],
-                function (dom, MultiSelectComboBox, JsonRest, xhr, array) {
+                function (dom, MultiSelectComboBox, Memory, xhr, array) {
                     var store, w, w2, w3;
 
-                    store = new JsonRest({
-                        idProperty: "alpha-2",
-                        target: "./iso-countries.json"
-                    });
+                    xhr.get('./iso-countries.json').then(function (response) {
+                                var items = JSON.parse(response), data = [];
+                                array.forEach(items, function (item) {
+                                    data.push({
+                                        id: item['alpha-2'],
+                                        name: item.name
+                                    })
+                                });
 
-                    w = new MultiSelectComboBox({
-                        id: 'select1',
-                        displayAttr: 'name',
-                        labelWidth: '5em',
-                        store: store,
-                        onChange: function (value) {
-                            dom.byId('selection-output').innerHTML = JSON.stringify(value);
-                        }
-                    });
+                                store = new Memory({
+                                    data: data
+                                });
 
-                    w2 = new MultiSelectComboBox({
-                        id: 'select2',
-                        displayAttr: 'name',
-                        labelWidth: '10em',
-                        showApplyButton: true,
-                        store: store,
-                        onChange: function (value) {
-                            dom.byId('selection-output2').innerHTML = JSON.stringify(value);
-                        }
-                    });
+                                w = new MultiSelectComboBox({
+                                    id: 'select1',
+                                    displayAttr: 'name',
+                                    labelWidth: '5em',
+                                    store: store,
+                                    onChange: function (value) {
+                                        dom.byId('selection-output').innerHTML = JSON.stringify(value);
+                                    }
+                                }).placeAt(dom.byId('placeholder'));
+                                w.startup();
 
-                    w3 = new MultiSelectComboBox({
-                        id: 'select3',
-                        displayAttr: 'name',
-                        emptyLabel: 'Select countries',
-                        labelWidth: '10em',
-                        singularValueLabel: 'country',
-                        pluralValueLabel: 'countries',
-                        store: store,
-                        onChange: function (value) {
-                            dom.byId('selection-output3').innerHTML = JSON.stringify(value);
-                        }
-                    });
+                                w2 = new MultiSelectComboBox({
+                                    id: 'select2',
+                                    displayAttr: 'name',
+                                    labelWidth: '10em',
+                                    showApplyButton: true,
+                                    showFilterField: true,
+                                    store: store,
+                                    onChange: function (value) {
+                                        dom.byId('selection-output2').innerHTML = JSON.stringify(value);
+                                    }
+                                }).placeAt(dom.byId('placeholder2'));
+                                w2.startup();
 
-                    dom.byId('placeholder').appendChild(w.domNode);
-                    dom.byId('placeholder2').appendChild(w2.domNode);
-                    dom.byId('placeholder3').appendChild(w3.domNode);
+                                w3 = new MultiSelectComboBox({
+                                    id: 'select3',
+                                    displayAttr: 'name',
+                                    emptyLabel: 'Select countries',
+                                    labelWidth: '10em',
+                                    singularValueLabel: 'country',
+                                    pluralValueLabel: 'countries',
+                                    clearAllButtonLabel: 'Show all',
+                                    store: store,
+                                    onChange: function (value) {
+                                        dom.byId('selection-output3').innerHTML = JSON.stringify(value);
+                                    }
+                                }).placeAt(dom.byId('placeholder3'));
+                                w3.startup();
 
-                });
+                            }
+                    );
+                }
+        );
     </script>
 </head>
 <body class="claro">
@@ -116,7 +128,7 @@
 
 <hr>
 
-<h2>Singular and plural labels in the selection count.</h2>
+<h2>Singular and plural labels in the selection count, and overriding text of the clear all button.</h2>
 
 <div>
     <div id="placeholder3" style="display: inline-block; margin-right: 5em;">

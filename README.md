@@ -13,4 +13,8 @@ Features:
 
 Limitations
 ===========
+This component is currently only suitable for local stores, as there is no processing for a suitable delay before re-querying the store, it is done on each keypress.
+This means that if you were to use a remote store such as a JsonRest you would re-query the server on each key press, which is unlikely
+to be acceptable.
+
 The component does not support external setting of the selection - selection is currently entirely self-contained.

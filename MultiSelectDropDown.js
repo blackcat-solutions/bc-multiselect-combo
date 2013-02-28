@@ -12,11 +12,12 @@ define([
     "dojo/text!./resources/MultiSelectDropDown.html",
     "dijit/layout/_ContentPaneResizeMixin",
     "dijit/form/Button",
+    "dojo/dom-geometry",
 
     "dijit/form/TextBox",
     "dijit/layout/ContentPane"
 ], function (declare, lang, on, Grid, Selection, Keyboard, selector, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template,
-             _ContentPaneResizeMixin, Button) {
+             _ContentPaneResizeMixin, Button, geom) {
 
     var MyGrid = declare([Grid, Selection, Keyboard], {
         showHeader: false,
@@ -33,6 +34,8 @@ define([
         displayAttr: null,
         showApplyButton: false,
         showClearAllButton: false,
+        clearAllButtonLabel: null,
+        showFilterField: false,
 
         templateString: template,
         dapFilterField: null,
@@ -79,21 +82,35 @@ define([
 
             if (this.showClearAllButton) {
                 clearAllButton = new Button({
-                    label: 'Clear all',
+                    label: this.clearAllButtonLabel,
                     onClick: lang.hitch(this, this._clearButtonClicked)
                 });
                 this.dapButtonContainer.appendChild(clearAllButton.domNode);
+            }
+
+            if (!this.showFilterField) {
+                this.dapFilterField.destroy();
+                this.dapFilterField = null;
             }
         },
 
         onClose: function() {
             this.inherited(arguments);
-            this.dapFilterField.set('value', null);
+            if (this.dapFilterField) {
+                this.dapFilterField.set('value', null);
+            }
             this._handleFilterChange();
+        },
+
+        setWidth: function(w) {
+            if (this.dapFilterField) {
+                this.dapFilterField.set('style', {width: w + 'px'});
+            }
         },
 
         onOpen: function() {
             this.inherited(arguments);
+            this.resize();
             this._grid.refresh();
         },
 
@@ -109,7 +126,9 @@ define([
 
         _handleFilterChange: function() {
             var query = {};
-            query[this.displayAttr] = new RegExp('^.*' + this.dapFilterField.get('displayedValue') + '.*$', 'i');
+            if (this.dapFilterField) {
+                query[this.displayAttr] = new RegExp('^.*' + this.dapFilterField.get('displayedValue') + '.*$', 'i');
+            }
             this._grid.set('query', query);
         },
 
