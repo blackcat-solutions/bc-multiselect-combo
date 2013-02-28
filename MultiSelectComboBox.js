@@ -141,7 +141,7 @@ define([
             if (this._dropDown && !this._internalSetSelection) {
                 this._dropDown.setSelection(selection);
             }
-            self._updateLabel();
+            this._updateLabel();
             this.set('value', values);
             if (this.onChange) {
                 this.onChange(values);
