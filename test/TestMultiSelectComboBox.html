@@ -38,59 +38,48 @@
                 function (dom, MultiSelectComboBox, Memory, JsonRest, xhr, array) {
                     var store, w, w2, w3;
 
-                    // convert that to a memory
-                    xhr.get('./iso-countries.json').then(function(response){
-                        var items = JSON.parse(response), data = [];
-                        array.forEach(items, function(item){
-                            data.push({
-                                id: item['country-code'],
-                                name: item.name
-                            })
-                        });
-
-                        store = new Memory({
-                            data: data
-                        });
-
-                        w = new MultiSelectComboBox({
-                            id: 'select1',
-                            displayAttr: 'name',
-                            labelWidth: '5em',
-                            store: store,
-                            onChange: function(value) {
-                                dom.byId('selection-output').innerHTML = JSON.stringify(value);
-                            }
-                        });
-
-                        w2 = new MultiSelectComboBox({
-                            id: 'select2',
-                            displayAttr: 'name',
-                            labelWidth: '10em',
-                            showApplyButton: true,
-                            store: store,
-                            onChange: function(value) {
-                                dom.byId('selection-output2').innerHTML = JSON.stringify(value);
-                            }
-                        });
-
-                        w3 = new MultiSelectComboBox({
-                            id: 'select3',
-                            displayAttr: 'name',
-                            emptyLabel: 'Select countries',
-                            labelWidth: '10em',
-                            singularValueLabel: 'country',
-                            pluralValueLabel: 'countries',
-                            store: store,
-                            onChange: function(value) {
-                                dom.byId('selection-output3').innerHTML = JSON.stringify(value);
-                            }
-                        });
-
-                        dom.byId('placeholder').appendChild(w.domNode);
-                        dom.byId('placeholder2').appendChild(w2.domNode);
-                        dom.byId('placeholder3').appendChild(w3.domNode);
+                    store = new JsonRest({
+                        idProperty: "alpha-2",
+                        target: "./iso-countries.json"
                     });
 
+                    w = new MultiSelectComboBox({
+                        id: 'select1',
+                        displayAttr: 'name',
+                        labelWidth: '5em',
+                        store: store,
+                        onChange: function (value) {
+                            dom.byId('selection-output').innerHTML = JSON.stringify(value);
+                        }
+                    });
+
+                    w2 = new MultiSelectComboBox({
+                        id: 'select2',
+                        displayAttr: 'name',
+                        labelWidth: '10em',
+                        showApplyButton: true,
+                        store: store,
+                        onChange: function (value) {
+                            dom.byId('selection-output2').innerHTML = JSON.stringify(value);
+                        }
+                    });
+
+                    w3 = new MultiSelectComboBox({
+                        id: 'select3',
+                        displayAttr: 'name',
+                        emptyLabel: 'Select countries',
+                        labelWidth: '10em',
+                        singularValueLabel: 'country',
+                        pluralValueLabel: 'countries',
+                        store: store,
+                        onChange: function (value) {
+                            dom.byId('selection-output3').innerHTML = JSON.stringify(value);
+                        }
+                    });
+
+                    dom.byId('placeholder').appendChild(w.domNode);
+                    dom.byId('placeholder2').appendChild(w2.domNode);
+                    dom.byId('placeholder3').appendChild(w3.domNode);
 
                 });
     </script>
@@ -100,6 +89,7 @@
 <h1>Multi-select combo tests</h1>
 
 <h2>Default behaviour (immediate change of selection)</h2>
+
 <div>
     <div id="placeholder" style="display: inline-block; margin-right: 5em;">
     </div>
@@ -112,8 +102,10 @@
 <hr>
 
 <h2>Only change selection when apply pressed.</h2>
+
 <p>Useful when the action taken on change of selection is expensive and you only want to do it when the user
-has finished making all their selections.</p>
+    has finished making all their selections.</p>
+
 <div>
     <div id="placeholder2" style="display: inline-block; margin-right: 5em;">
     </div>
@@ -126,6 +118,7 @@ has finished making all their selections.</p>
 <hr>
 
 <h2>Singular and plural labels in the selection count.</h2>
+
 <div>
     <div id="placeholder3" style="display: inline-block; margin-right: 5em;">
     </div>

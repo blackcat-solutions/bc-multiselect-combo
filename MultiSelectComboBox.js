@@ -104,7 +104,7 @@ define([
             var key, values = [];
             for (key in selection) {
                 if (selection.hasOwnProperty(key)) {
-                    values.push(this.store.get(key));
+                    values.push(key);
                 }
             }
             this.set('value', values);
