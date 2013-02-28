@@ -28,14 +28,13 @@
         require([
             "dojo/dom",
             "bc-multiselect-combo/MultiSelectComboBox",
-            "dojo/store/Memory",
             "dojo/store/JsonRest",
             "dojo/request/xhr",
             "dojo/_base/array",
 
             "dojo/domReady!"
         ],
-                function (dom, MultiSelectComboBox, Memory, JsonRest, xhr, array) {
+                function (dom, MultiSelectComboBox, JsonRest, xhr, array) {
                     var store, w, w2, w3;
 
                     store = new JsonRest({
