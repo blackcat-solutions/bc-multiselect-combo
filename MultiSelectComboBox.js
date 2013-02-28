@@ -13,8 +13,7 @@ define([
     "dojo/dom-geometry",
 
     "dijit/form/ComboButton"
-], function (declare, on, aspect, query, style, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown,
-    DropDownMenu, geom) {
+], function (declare, on, aspect, query, style, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, MultiSelectDropDown, DropDownMenu, geom) {
 
     return declare("bc-multiselect-combo.MultiSelectComboBox", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin], {
 
@@ -64,7 +63,7 @@ define([
         _dropDown: null,
         _selectionHandler: null,
 
-        postCreate: function() {
+        postCreate: function () {
 
             var dropDown = new DropDownMenu(),
                 self = this;
@@ -76,22 +75,23 @@ define([
                 showApplyButton: this.showApplyButton,
                 showClearAllButton: this.showClearAllButton,
                 clearAllButtonLabel: this.clearAllButtonLabel,
-                onApply: function(){
+                onApply: function () {
                     self.dapButton.closeDropDown();
                     self._dropDown.onClose();
                 }
             });
 
-            this._dropDown.watch('selection', function(){
+            this._dropDown.watch('selection', function () {
+                self._internalSetSelection = true;
                 self.set('selection', JSON.parse(JSON.stringify(self._dropDown.get('selection'))));
-                self._updateLabel();
+                self._internalSetSelection = true;
             });
 
             dropDown.addChild(this._dropDown);
 
             this.dapButton.set('dropDown', dropDown);
 
-            aspect.after(this.dapButton, 'closeDropDown', function(){
+            aspect.after(this.dapButton, 'closeDropDown', function () {
                 self._dropDown.onClose();
                 if (self.showApplyButton) {
                     // set the selection on the grid to the one last applied by the 'Apply' button in case
@@ -106,7 +106,7 @@ define([
                 }
             });
 
-            aspect.after(this.dapButton, 'openDropDown', function(){
+            aspect.after(this.dapButton, 'openDropDown', function () {
                 self._dropDown.onOpen();
             });
 
@@ -119,18 +119,18 @@ define([
             }
         },
 
-        startup: function() {
+        startup: function () {
             this.inherited(arguments);
             // TODO - I know this is wrong, just a little tired at this stage - someone please tell me how to handle this properly.
             this._dropDown.setWidth(geom.getContentBox(this.dapButton.domNode).w - 4);
         },
 
-        destroy: function() {
+        destroy: function () {
             this.inherited(arguments);
             this._selectionHandler.remove();
         },
 
-        _setSelectionAttr: function(selection) {
+        _setSelectionAttr: function (selection) {
             this._set('selection', selection);
             var key, values = [];
             for (key in selection) {
@@ -138,13 +138,26 @@ define([
                     values.push(key);
                 }
             }
+            if (this._dropDown && !this._internalSetSelection) {
+                this._dropDown.setSelection(selection);
+            }
+            self._updateLabel();
             this.set('value', values);
             if (this.onChange) {
                 this.onChange(values);
             }
         },
 
-        _updateLabel: function() {
+        _setStoreAttr: function (store) {
+            if (this._dropDown) {
+                this._dropDown.set('store', store);
+            }
+            else {
+                this.store = store;
+            }
+        },
+
+        _updateLabel: function () {
             var label;
             if (this.showSelectionCount) {
                 var count = 0, key, selection = this.get('selection');

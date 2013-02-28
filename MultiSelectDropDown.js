@@ -12,12 +12,10 @@ define([
     "dojo/text!./resources/MultiSelectDropDown.html",
     "dijit/layout/_ContentPaneResizeMixin",
     "dijit/form/Button",
-    "dojo/dom-geometry",
 
     "dijit/form/TextBox",
     "dijit/layout/ContentPane"
-], function (declare, lang, on, Grid, Selection, Keyboard, selector, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template,
-             _ContentPaneResizeMixin, Button, geom) {
+], function (declare, lang, on, Grid, Selection, Keyboard, selector, _WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin, template, _ContentPaneResizeMixin, Button) {
 
     var MyGrid = declare([Grid, Selection, Keyboard], {
         showHeader: false,
@@ -28,7 +26,7 @@ define([
     });
 
     return declare("bc-multiselect-combo.MultiSelectDropDown", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplatedMixin,
-            _ContentPaneResizeMixin], {
+        _ContentPaneResizeMixin], {
 
         store: null,
         displayAttr: null,
@@ -45,7 +43,7 @@ define([
         _grid: null,
         _selectionHandler: null,
 
-        postCreate: function() {
+        postCreate: function () {
             var cols = [
                     selector({}),
                     {field: this.displayAttr}
@@ -62,7 +60,7 @@ define([
             grid.refresh();
 
             this.own(
-                on(grid.domNode, 'dgrid-select,dgrid-deselect', function(evt){
+                on(grid.domNode, 'dgrid-select,dgrid-deselect', function (evt) {
                     // if we are not showing an apply button, change the property immediately
                     if (!self.showApplyButton) {
                         self._applySelection();
@@ -94,7 +92,7 @@ define([
             }
         },
 
-        onClose: function() {
+        onClose: function () {
             this.inherited(arguments);
             if (this.dapFilterField) {
                 this.dapFilterField.set('value', null);
@@ -102,29 +100,38 @@ define([
             this._handleFilterChange();
         },
 
-        setWidth: function(w) {
+        setWidth: function (w) {
             if (this.dapFilterField) {
                 this.dapFilterField.set('style', {width: w + 'px'});
             }
         },
 
-        onOpen: function() {
+        onOpen: function () {
             this.inherited(arguments);
             this.resize();
             this._grid.refresh();
         },
 
-        destroy: function() {
+        destroy: function () {
             this._selectionHandler.remove();
             this.inherited(arguments);
         },
 
-        setSelection: function(selection) {
+        setSelection: function (selection) {
             this._grid.selection = selection;
             this._grid.refresh();
         },
 
-        _handleFilterChange: function() {
+        _setStoreAttr: function (store) {
+            if (this._grid) {
+                this._grid.set('store', store);
+            }
+            else {
+                this.store = store;
+            }
+        },
+
+        _handleFilterChange: function () {
             var query = {};
             if (this.dapFilterField) {
                 query[this.displayAttr] = new RegExp('^.*' + this.dapFilterField.get('displayedValue') + '.*$', 'i');
@@ -132,16 +139,16 @@ define([
             this._grid.set('query', query);
         },
 
-        _applyButtonClicked: function() {
+        _applyButtonClicked: function () {
             this._applySelection();
             this.emit('Apply', {});
         },
 
-        _applySelection: function() {
+        _applySelection: function () {
             this.set('selection', JSON.parse(JSON.stringify(this._grid.selection))); // create a copy or various things will go wrong
         },
 
-        _clearButtonClicked: function() {
+        _clearButtonClicked: function () {
             this._grid.clearSelection();
             if (!this.showApplyButton) {
                 this._applySelection();
